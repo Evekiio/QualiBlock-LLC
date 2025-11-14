@@ -40,5 +40,9 @@ func printBanner() {
 }
 
 func registerRoutes(mux *http.ServeMux) {
+	// Static File Handler
+	mux.HandleFunc("/static/", logic.DefaultStaticHandler)
+
+	// Default Handler for All Random / Requests
 	mux.HandleFunc("/", logic.DefaultHandler)
 }
