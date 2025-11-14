@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"qb/logic"
 )
 
 func init() {
@@ -13,6 +14,23 @@ func main() {
 	startPlatform()
 }
 
+func startPlatform() {
+	// Create a new ServeMux
+	mux := http.NewServeMux()
+
+	// Register the Logic Routes
+	registerRoutes(mux)
+
+	// Display Console Banner
+	printBanner()
+
+	fmt.Println("Starting QualiBlock Web Platform on http://localhost:3000")
+	err := http.ListenAndServe(":3000", mux)
+	if err != nil {
+		fmt.Println("Error Starting Platform:", err)
+	}
+}
+
 func printBanner() {
 	fmt.Println("")
 	fmt.Println("===================================")
@@ -21,21 +39,6 @@ func printBanner() {
 	fmt.Println("")
 }
 
-func registerRoutes() {
-	// PLACEHOLDER ROUTE REGISTRATION COMMENT
-}
-
-func startPlatform() {
-	// PLACEHOLDER PLATFORM START COMMENT
-
-	mux := http.NewServeMux()
-
-	registerRoutes()
-	printBanner()
-
-	fmt.Println("Starting QualiBlock Web Platform on http://localhost:3000")
-	err := http.ListenAndServe(":3000", mux)
-	if err != nil {
-		fmt.Println("Error Starting Platform:", err)
-	}
+func registerRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/", logic.DefaultHandler)
 }
